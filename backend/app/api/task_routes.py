@@ -1,14 +1,15 @@
 from flask import Blueprint, jsonify, request
-from models import Task
-from models import TaskManager
+from app.models.Task import Task
+from app.models.TaskManager import TaskManager
 import uuid
+import os
 from datetime import datetime
 
 bp = Blueprint('tasks', __name__, url_prefix='/tasks')
 
-DB_FILE = 'database.json'
+DB_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'tests', 'database.json')
 
-manager = TaskManager("database.json")
+manager = TaskManager(DB_FILE)
 
 
 #GET lista todas as atividades
