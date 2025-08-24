@@ -1,11 +1,13 @@
 from flask import Flask
 from app.api import task_routes
+from app.api import auth_routes
 
 
 app = Flask(__name__)
 
 #Registrando rotas
 
+app.register_blueprint(auth_routes.bp)
 app.register_blueprint(task_routes.bp)
 
 

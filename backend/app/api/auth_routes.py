@@ -6,7 +6,7 @@ import jwt
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
-manager = UserManager("backend/testes/users.json")
+manager = UserManager("backend/app/tests/users.json")
 
 SECRET_KEY = "chave_segredo"
 

@@ -5,14 +5,14 @@ from app.models.User import User
 class UserManager:
     def __init__(self, db_file):
         self.db_file = db_file
-        if not os.path(self.db_file):
+        if not os.path.exists(self.db_file):
             with open(self.db_file, "w") as f:
                 json.dump([], f)
 
     
     def load_users(self):
         with open(self.db_file, "r") as f:
-            users_data = json.loas(f)
+            users_data = json.load(f)
         return [User(**u) for u in users_data]
     
     def save_users(self, users):
