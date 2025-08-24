@@ -1,0 +1,23 @@
+from datetime import datetime
+
+class Task:
+    def __init__(self, title, description="", 
+                 status="pendente", created_at=None, updated_at=None):
+        
+        self.id = id
+        self.title = title
+        self.description = description
+        self.status = status
+        self.created_at = created_at or datetime.now().isoformat()
+        self.updated_at = updated_at
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "description": self.description,
+            "status": self.status,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
+        }
+    
