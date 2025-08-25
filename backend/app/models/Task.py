@@ -1,7 +1,7 @@
 from datetime import datetime
 
 class Task:
-    def __init__(self, title, description="", 
+    def __init__(self, id, title, description="", 
                  status="pendente", created_at=None, updated_at=None):
         
         self.id = id

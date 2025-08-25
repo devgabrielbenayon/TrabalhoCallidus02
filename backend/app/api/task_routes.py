@@ -7,7 +7,7 @@ from datetime import datetime
 
 bp = Blueprint('tasks', __name__, url_prefix='/tasks')
 
-DB_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'tests', 'database.json')
+DB_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'database.json')
 
 manager = TaskManager(DB_FILE)
 
