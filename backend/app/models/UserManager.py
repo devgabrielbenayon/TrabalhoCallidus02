@@ -23,3 +23,8 @@ class UserManager:
         users = self.load_users()
 
         return next((u for u in users if u.username == username), None)
+    
+    def find_by_id(self, user_id):
+        users = self.load_users()
+        
+        return next((u for u in users if u.id == user_id), None)

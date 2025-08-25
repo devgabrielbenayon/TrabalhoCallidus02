@@ -1,11 +1,12 @@
 from datetime import datetime
 
 class Task:
-    def __init__(self, id, title, description="", 
+    def __init__(self, id, title, user_id, description="", 
                  status="pendente", created_at=None, updated_at=None):
         
         self.id = id
         self.title = title
+        self.user_id = user_id
         self.description = description
         self.status = status
         self.created_at = created_at or datetime.now().isoformat()
@@ -15,9 +16,9 @@ class Task:
         return {
             "id": self.id,
             "title": self.title,
+            "user_id": self.user_id,
             "description": self.description,
             "status": self.status,
             "created_at": self.created_at,
             "updated_at": self.updated_at
         }
-    
