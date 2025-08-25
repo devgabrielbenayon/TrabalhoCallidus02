@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from app.models.User import User
 from app.models.UserManager import UserManager
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import jwt
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -24,6 +24,7 @@ def register():
 
     new_user = User(username=data["username"])
     new_user.set_password(data["password"])
+    new_user.created_at = datetime.now().isoformat()
 
     users = manager.load_users()
     users.append(new_user)
@@ -33,7 +34,7 @@ def register():
 
 
 #POST login de usuário
-@bp.route("/login", methods=["POSTS"])
+@bp.route("/login", methods=["POST"])
 def login():
     data = request.json
     if not data.get("username") or not data.get("password"):
@@ -46,7 +47,7 @@ def login():
     token = jwt.encode(
         {
             "user_id": user.id,
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+            "exp": datetime.now(timezone.utc) + timedelta(hours=1)
         },
         SECRET_KEY,
         algorithm="HS256"
