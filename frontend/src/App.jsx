@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import Kanban from "./pages/Kanban"; // 👈 importa a nova tela
+import Kanban from "./pages/Kanban";
 import { useAuth } from "./context/AuthContext";
 
 function PrivateRoute({ children }) {
@@ -23,7 +23,6 @@ export default function App() {
         }
       />
 
-      {/* 👇 rota protegida para o Kanban */}
       <Route
         path="/kanban"
         element={
@@ -31,6 +30,28 @@ export default function App() {
             <Kanban />
           </PrivateRoute>
         }
+      />
+
+      {/* Páginas da sidebar (placeholders, todas protegidas) */}
+      <Route
+        path="/nova-tarefa"
+        element={<PrivateRoute><div style={{ padding: 24 }}>Adicionar nova tarefa</div></PrivateRoute>}
+      />
+      <Route
+        path="/minhas-tarefas"
+        element={<PrivateRoute><div style={{ padding: 24 }}>Minhas tarefas</div></PrivateRoute>}
+      />
+      <Route
+        path="/pomodoro"
+        element={<PrivateRoute><div style={{ padding: 24 }}>Pomodoro</div></PrivateRoute>}
+      />
+      <Route
+        path="/produtividade"
+        element={<PrivateRoute><div style={{ padding: 24 }}>Produtividade Detalhada</div></PrivateRoute>}
+      />
+      <Route
+        path="/configuracoes"
+        element={<PrivateRoute><div style={{ padding: 24 }}>Configurações da Conta</div></PrivateRoute>}
       />
 
       <Route path="*" element={<Navigate to="/login" />} />

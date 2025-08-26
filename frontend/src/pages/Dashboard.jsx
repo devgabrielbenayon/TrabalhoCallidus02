@@ -1,5 +1,5 @@
 // src/pages/Dashboard.jsx
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -12,6 +12,12 @@ import {
   IconButton,
   AppBar,
   Toolbar,
+  Drawer,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Divider,
 } from "@mui/material";
 import {
   CheckCircle,
@@ -19,17 +25,16 @@ import {
   HourglassBottom,
   Notifications,
   Settings,
-  Menu,
-} from "@mui/icons-material";
-import {
+  Menu as MenuIcon,
+  AddCircleOutline,
+  Assignment,
+  Timer,
   BarChart,
-  Bar,
-  ResponsiveContainer,
-  Tooltip,
-} from "recharts";
-import { useNavigate } from "react-router-dom"; // 👈 import para navegação
-
-import "./dashboard.css"; // mantém o css
+  ManageAccounts,
+} from "@mui/icons-material";
+import { BarChart as ReBarChart, Bar, ResponsiveContainer, Tooltip } from "recharts";
+import { useNavigate, Link } from "react-router-dom";
+import "./dashboard.css";
 
 const dataBar = [
   { name: "S", value: 6 },
@@ -42,18 +47,18 @@ const dataBar = [
 ];
 
 export default function Dashboard() {
-  const navigate = useNavigate(); // 👈 hook de navegação
+  const navigate = useNavigate();
+  const [openDrawer, setOpenDrawer] = useState(false);
+
+  const toggleDrawer = (open) => () => setOpenDrawer(open);
 
   return (
     <Box sx={{ flexGrow: 1, bgcolor: "#f5f5f5", minHeight: "100vh" }}>
       {/* Navbar */}
-      <AppBar
-        position="static"
-        sx={{ bgcolor: "#fff", color: "black", boxShadow: 1 }}
-      >
+      <AppBar position="static" sx={{ bgcolor: "#fff", color: "black", boxShadow: 1 }}>
         <Toolbar>
-          <IconButton edge="start">
-            <Menu />
+          <IconButton edge="start" onClick={toggleDrawer(true)}>
+            <MenuIcon />
           </IconButton>
           <IconButton>
             <Notifications color="primary" />
@@ -71,6 +76,39 @@ export default function Dashboard() {
         </Toolbar>
       </AppBar>
 
+      {/* Sidebar (Drawer) */}
+      <Drawer anchor="left" open={openDrawer} onClose={toggleDrawer(false)}>
+        <Box sx={{ width: 280 }} role="presentation" onClick={toggleDrawer(false)}>
+          <Typography variant="h6" sx={{ p: 2, fontWeight: 700 }}>
+            Menu
+          </Typography>
+          <Divider />
+          <List>
+            <ListItemButton component={Link} to="/nova-tarefa">
+              <ListItemIcon><AddCircleOutline /></ListItemIcon>
+              <ListItemText primary="Adicionar nova tarefa" />
+            </ListItemButton>
+            <ListItemButton component={Link} to="/minhas-tarefas">
+              <ListItemIcon><Assignment /></ListItemIcon>
+              <ListItemText primary="Minhas tarefas" />
+            </ListItemButton>
+            <ListItemButton component={Link} to="/pomodoro">
+              <ListItemIcon><Timer /></ListItemIcon>
+              <ListItemText primary="Pomodoro" />
+            </ListItemButton>
+            <ListItemButton component={Link} to="/produtividade">
+              <ListItemIcon><BarChart /></ListItemIcon>
+              <ListItemText primary="Produtividade Detalhada" />
+            </ListItemButton>
+            <Divider sx={{ my: 1 }} />
+            <ListItemButton component={Link} to="/configuracoes">
+              <ListItemIcon><ManageAccounts /></ListItemIcon>
+              <ListItemText primary="Configurações da Conta" />
+            </ListItemButton>
+          </List>
+        </Box>
+      </Drawer>
+
       {/* Layout principal */}
       <Box className="dash-main" sx={{ p: 3 }}>
         {/* Coluna Esquerda */}
@@ -87,27 +125,21 @@ export default function Dashboard() {
           <Card sx={{ bgcolor: "#40E0D0", borderRadius: 3 }}>
             <CardContent>
               <ListAlt fontSize="large" />
-              <Typography variant="subtitle1">
-                TAREFAS CONCLUÍDAS HOJE
-              </Typography>
+              <Typography variant="subtitle1">TAREFAS CONCLUÍDAS HOJE</Typography>
               <Typography variant="h4">5</Typography>
             </CardContent>
           </Card>
           <Card sx={{ bgcolor: "#40E0D0", borderRadius: 3 }}>
             <CardContent>
               <HourglassBottom fontSize="large" />
-              <Typography variant="subtitle1">
-                TEMPO TOTAL DE FOCO HOJE (MIN)
-              </Typography>
+              <Typography variant="subtitle1">TEMPO TOTAL DE FOCO HOJE (MIN)</Typography>
               <Typography variant="h4">120</Typography>
             </CardContent>
           </Card>
           <Card sx={{ bgcolor: "#40E0D0", borderRadius: 3 }}>
             <CardContent>
               <HourglassBottom fontSize="large" />
-              <Typography variant="subtitle1">
-                TEMPO PRODUTIVO SEMANA (MIN)
-              </Typography>
+              <Typography variant="subtitle1">TEMPO PRODUTIVO SEMANA (MIN)</Typography>
               <Typography variant="h4">840</Typography>
             </CardContent>
           </Card>
@@ -130,13 +162,7 @@ export default function Dashboard() {
             }}
           >
             {/* Cronômetro e checkboxes */}
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: { xs: "column", md: "row" },
-                gap: 2,
-              }}
-            >
+            <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, gap: 2 }}>
               {/* Cronômetro */}
               <Box sx={{ flex: 1, textAlign: "center" }}>
                 <Box
@@ -155,23 +181,10 @@ export default function Dashboard() {
                   <Typography variant="h3">25:00</Typography>
                 </Box>
                 <Box sx={{ mt: 2 }}>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      mr: 1,
-                      bgcolor: "#000",
-                      "&:hover": { bgcolor: "#333" },
-                    }}
-                  >
+                  <Button variant="contained" sx={{ mr: 1, bgcolor: "#000", "&:hover": { bgcolor: "#333" } }}>
                     INICIAR
                   </Button>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      bgcolor: "#000",
-                      "&:hover": { bgcolor: "#333" },
-                    }}
-                  >
+                  <Button variant="contained" sx={{ bgcolor: "#000", "&:hover": { bgcolor: "#333" } }}>
                     PAUSAR
                   </Button>
                 </Box>
@@ -180,24 +193,15 @@ export default function Dashboard() {
               {/* Checkboxes */}
               <Box sx={{ flex: 1 }}>
                 <Card sx={{ p: 2, borderRadius: 3, bgcolor: "#e0f7f7" }}>
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ fontWeight: "bold", mb: 2 }}
-                  >
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 2 }}>
                     TAREFA ATUAL
                   </Typography>
-                  <Box
-                    sx={{ display: "flex", flexDirection: "column", gap: 1 }}
-                  >
-                    <FormControlLabel
-                      control={<Checkbox defaultChecked />}
-                      label="Estudar"
-                    />
+                  <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                    <FormControlLabel control={<Checkbox defaultChecked />} label="Estudar" />
                     <FormControlLabel control={<Checkbox />} label="Leitura" />
                     <FormControlLabel control={<Checkbox />} label="Academia" />
                   </Box>
 
-                  {/* 👇 Botão agora navega para o Kanban */}
                   <Button
                     onClick={() => navigate("/kanban")}
                     sx={{
@@ -221,10 +225,10 @@ export default function Dashboard() {
                 PRODUTIVIDADE SEMANAL
               </Typography>
               <ResponsiveContainer width="100%" height={250}>
-                <BarChart data={dataBar}>
+                <ReBarChart data={dataBar}>
                   <Bar dataKey="value" fill="#00C49F" />
                   <Tooltip />
-                </BarChart>
+                </ReBarChart>
               </ResponsiveContainer>
             </Card>
           </Card>
