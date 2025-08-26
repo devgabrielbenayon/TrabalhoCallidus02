@@ -3,7 +3,7 @@ from flask import request, jsonify, current_app
 import jwt
 from app.models.UserManager import UserManager # Precisamos para buscar o usuário se necessário
 
-manager = UserManager("tests/users.json")
+manager = UserManager("../tests/users.json")
 
 
 def token_required(f):
