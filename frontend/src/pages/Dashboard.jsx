@@ -2,7 +2,6 @@
 import React from "react";
 import {
   Box,
-  Grid,
   Typography,
   Card,
   CardContent,
@@ -28,6 +27,9 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import { useNavigate } from "react-router-dom"; // 👈 import para navegação
+
+import "./dashboard.css"; // mantém o css
 
 const dataBar = [
   { name: "S", value: 6 },
@@ -40,10 +42,15 @@ const dataBar = [
 ];
 
 export default function Dashboard() {
+  const navigate = useNavigate(); // 👈 hook de navegação
+
   return (
     <Box sx={{ flexGrow: 1, bgcolor: "#f5f5f5", minHeight: "100vh" }}>
       {/* Navbar */}
-      <AppBar position="static" sx={{ bgcolor: "#fff", color: "black", boxShadow: 1 }}>
+      <AppBar
+        position="static"
+        sx={{ bgcolor: "#fff", color: "black", boxShadow: 1 }}
+      >
         <Toolbar>
           <IconButton edge="start">
             <Menu />
@@ -64,46 +71,74 @@ export default function Dashboard() {
         </Toolbar>
       </AppBar>
 
-      <Grid container spacing={2} sx={{ p: 3, alignItems: "stretch" }}>
-        {/* Sidebar cards */}
-        <Grid item xs={12} md={3} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      {/* Layout principal */}
+      <Box className="dash-main" sx={{ p: 3 }}>
+        {/* Coluna Esquerda */}
+        <div className="dash-left">
           <Card sx={{ bgcolor: "#40E0D0", borderRadius: 3 }}>
             <CardContent>
               <CheckCircle fontSize="large" />
-              <Typography variant="subtitle1">CICLOS DE POMODORO CONCLUÍDOS HOJE</Typography>
+              <Typography variant="subtitle1">
+                CICLOS DE POMODORO CONCLUÍDOS HOJE
+              </Typography>
               <Typography variant="h4">2</Typography>
             </CardContent>
           </Card>
           <Card sx={{ bgcolor: "#40E0D0", borderRadius: 3 }}>
             <CardContent>
               <ListAlt fontSize="large" />
-              <Typography variant="subtitle1">TAREFAS CONCLUÍDAS HOJE</Typography>
+              <Typography variant="subtitle1">
+                TAREFAS CONCLUÍDAS HOJE
+              </Typography>
               <Typography variant="h4">5</Typography>
             </CardContent>
           </Card>
           <Card sx={{ bgcolor: "#40E0D0", borderRadius: 3 }}>
             <CardContent>
               <HourglassBottom fontSize="large" />
-              <Typography variant="subtitle1">TEMPO TOTAL DE FOCO HOJE (MIN)</Typography>
+              <Typography variant="subtitle1">
+                TEMPO TOTAL DE FOCO HOJE (MIN)
+              </Typography>
               <Typography variant="h4">120</Typography>
             </CardContent>
           </Card>
           <Card sx={{ bgcolor: "#40E0D0", borderRadius: 3 }}>
             <CardContent>
               <HourglassBottom fontSize="large" />
-              <Typography variant="subtitle1">TEMPO PRODUTIVO SEMANA (MIN)</Typography>
+              <Typography variant="subtitle1">
+                TEMPO PRODUTIVO SEMANA (MIN)
+              </Typography>
               <Typography variant="h4">840</Typography>
             </CardContent>
           </Card>
-        </Grid>
+        </div>
 
-        {/* Main content - card da direita dividido em 4 partes */}
-        <Grid item xs={12} md={9}>
-          <Card sx={{ borderRadius: 4, p: 3, bgcolor: "#40E0D0", display: "flex", flexDirection: "column", gap: 3 }}>
-            {/* Parte superior: Cronômetro e Checkboxes */}
-            <Grid container spacing={2}>
-              {/* Parte 1: Cronômetro + botões */}
-              <Grid item xs={12} md={6} sx={{ textAlign: "center" }}>
+        {/* Gap central */}
+        <div className="dash-gap" />
+
+        {/* Coluna Direita */}
+        <div className="dash-right">
+          <Card
+            className="big-card"
+            sx={{
+              borderRadius: 4,
+              p: 3,
+              bgcolor: "#40E0D0",
+              display: "flex",
+              flexDirection: "column",
+              gap: 3,
+            }}
+          >
+            {/* Cronômetro e checkboxes */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                gap: 2,
+              }}
+            >
+              {/* Cronômetro */}
+              <Box sx={{ flex: 1, textAlign: "center" }}>
                 <Box
                   sx={{
                     width: 220,
@@ -120,48 +155,81 @@ export default function Dashboard() {
                   <Typography variant="h3">25:00</Typography>
                 </Box>
                 <Box sx={{ mt: 2 }}>
-                  <Button variant="contained" sx={{ mr: 1, bgcolor: "#000", "&:hover": { bgcolor: "#333" } }}>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      mr: 1,
+                      bgcolor: "#000",
+                      "&:hover": { bgcolor: "#333" },
+                    }}
+                  >
                     INICIAR
                   </Button>
-                  <Button variant="contained" sx={{ bgcolor: "#000", "&:hover": { bgcolor: "#333" } }}>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      bgcolor: "#000",
+                      "&:hover": { bgcolor: "#333" },
+                    }}
+                  >
                     PAUSAR
                   </Button>
                 </Box>
-              </Grid>
+              </Box>
 
-              {/* Parte 2: Checkboxes */}
-              <Grid item xs={12} md={6}>
+              {/* Checkboxes */}
+              <Box sx={{ flex: 1 }}>
                 <Card sx={{ p: 2, borderRadius: 3, bgcolor: "#e0f7f7" }}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 2 }}>TAREFA ATUAL</Typography>
-                  <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                    <FormControlLabel control={<Checkbox defaultChecked />} label="Estudar" />
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", mb: 2 }}
+                  >
+                    TAREFA ATUAL
+                  </Typography>
+                  <Box
+                    sx={{ display: "flex", flexDirection: "column", gap: 1 }}
+                  >
+                    <FormControlLabel
+                      control={<Checkbox defaultChecked />}
+                      label="Estudar"
+                    />
                     <FormControlLabel control={<Checkbox />} label="Leitura" />
                     <FormControlLabel control={<Checkbox />} label="Academia" />
                   </Box>
-                  <Button sx={{ mt: 2, bgcolor: "#000", color: "#fff", borderRadius: 3, width: "100%", "&:hover": { bgcolor: "#333" } }}>
+
+                  {/* 👇 Botão agora navega para o Kanban */}
+                  <Button
+                    onClick={() => navigate("/kanban")}
+                    sx={{
+                      mt: 2,
+                      bgcolor: "#000",
+                      color: "#fff",
+                      borderRadius: 3,
+                      width: "100%",
+                      "&:hover": { bgcolor: "#333" },
+                    }}
+                  >
                     VISUALIZAR TAREFAS
                   </Button>
                 </Card>
-              </Grid>
-            </Grid>
+              </Box>
+            </Box>
 
-            {/* Parte inferior: Gráfico ocupando toda largura */}
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Card sx={{ p: 2, borderRadius: 3, bgcolor: "#e0f7f7" }}>
-                  <Typography variant="subtitle1" sx={{ mb: 1 }}>PRODUTIVIDADE SEMANAL</Typography>
-                  <ResponsiveContainer width="100%" height={250}>
-                    <BarChart data={dataBar}>
-                      <Bar dataKey="value" fill="#00C49F" />
-                      <Tooltip />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </Card>
-              </Grid>
-            </Grid>
+            {/* Gráfico */}
+            <Card sx={{ p: 2, borderRadius: 3, bgcolor: "#e0f7f7" }}>
+              <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                PRODUTIVIDADE SEMANAL
+              </Typography>
+              <ResponsiveContainer width="100%" height={250}>
+                <BarChart data={dataBar}>
+                  <Bar dataKey="value" fill="#00C49F" />
+                  <Tooltip />
+                </BarChart>
+              </ResponsiveContainer>
+            </Card>
           </Card>
-        </Grid>
-      </Grid>
+        </div>
+      </Box>
     </Box>
   );
 }
