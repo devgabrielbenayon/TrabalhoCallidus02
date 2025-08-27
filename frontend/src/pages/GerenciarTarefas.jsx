@@ -16,6 +16,7 @@ import {
   Stack,
   Snackbar,
   Alert,
+  Fade,
 } from "@mui/material";
 import { Delete, Add, Event } from "@mui/icons-material";
 
@@ -70,24 +71,45 @@ export default function GerenciarTarefas() {
       <Grid container spacing={3}>
         {tasks.map((task) => (
           <Grid item xs={12} md={6} lg={4} key={task.id}>
-            <Card sx={{ borderRadius: 3, boxShadow: 3, position: "relative" }}>
-              <CardContent>
-                <Stack direction="row" justifyContent="space-between" alignItems="center">
-                  <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                    {task.title}
-                  </Typography>
-                  <IconButton color="error" onClick={() => handleDeleteTask(task.id)}>
-                    <Delete />
-                  </IconButton>
-                </Stack>
-                <Box sx={{ mt: 1 }}>
-                  <Typography variant="body2" color="text.secondary">
-                    <Event sx={{ fontSize: 16, verticalAlign: "middle", mr: 0.5 }} />
-                    {task.date} às {task.time}
-                  </Typography>
-                </Box>
-              </CardContent>
-            </Card>
+            <Fade in={true} timeout={500}>
+              <Card
+                sx={{
+                  borderRadius: 3,
+                  boxShadow: 3,
+                  position: "relative",
+                  bgcolor: "#e0f7f7",
+                  transition: "transform 0.2s, box-shadow 0.2s",
+                  "&:hover": {
+                    transform: "translateY(-4px)",
+                    boxShadow: "0 6px 20px rgba(0,0,0,0.3)",
+                  },
+                }}
+              >
+                <CardContent>
+                  <Stack direction="row" justifyContent="space-between" alignItems="center">
+                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                      {task.title}
+                    </Typography>
+                    <IconButton
+                      color="error"
+                      onClick={() => handleDeleteTask(task.id)}
+                      sx={{
+                        transition: "transform 0.2s",
+                        "&:hover": { transform: "scale(1.2)" },
+                      }}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </Stack>
+                  <Box sx={{ mt: 1 }}>
+                    <Typography variant="body2" color="text.secondary">
+                      <Event sx={{ fontSize: 16, verticalAlign: "middle", mr: 0.5 }} />
+                      {task.date} às {task.time}
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Fade>
           </Grid>
         ))}
       </Grid>
@@ -123,7 +145,11 @@ export default function GerenciarTarefas() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog}>Cancelar</Button>
-          <Button onClick={handleAddTask} variant="contained" sx={{ bgcolor: "#40E0D0", "&:hover": { bgcolor: "#38cfc9" } }}>
+          <Button
+            onClick={handleAddTask}
+            variant="contained"
+            sx={{ bgcolor: "#40E0D0", "&:hover": { bgcolor: "#38cfc9" } }}
+          >
             Adicionar
           </Button>
         </DialogActions>
