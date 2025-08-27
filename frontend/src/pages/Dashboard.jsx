@@ -19,9 +19,9 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   return (
-    <Box className="dash-main" sx={{ display: "flex", gap: 3, flexWrap: "wrap" }}>
+    <Box className="dash-main" sx={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
       {/* Coluna esquerda */}
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 2, flex: 1 }}>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5, flex: 1 }}>
         <Card sx={{ bgcolor: "#40E0D0", borderRadius: 3 }}>
           <CardContent>
             <CheckCircle fontSize="large" />
@@ -83,7 +83,7 @@ export default function Dashboard() {
         {/* Gráfico */}
         <Card sx={{ p: 2, borderRadius: 3, bgcolor: "#e0f7f7" }}>
           <Typography variant="subtitle1" sx={{ mb: 1 }}>PRODUTIVIDADE SEMANAL</Typography>
-          <ResponsiveContainer width="100%" height={250}>
+          <ResponsiveContainer width="100%" height={200}>
             <ReBarChart data={dataBar}>
               <Bar dataKey="value" fill="#00C49F" />
               <Tooltip />

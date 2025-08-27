@@ -1,6 +1,6 @@
 /* ====== LAYOUT GERAL ====== */
 .dash-main {
-  width: 100%;
+  width: 95%;
   margin: 0;
   padding: 0;
   display: grid;
@@ -22,7 +22,7 @@
 /* ====== COLUNA ESQUERDA ====== */
 .dash-left {
   display: grid;
-  gap: 12px;                    /* distância entre os cards pequenos */
+  gap: 10px;                    /* distância entre os cards pequenos */
   align-content: start;         /* começa no topo */
 }
 
@@ -38,7 +38,7 @@
 .big-card {
   width: 100%;
   margin: 0;
-  max-width: 760px;             /* ajuste se quiser maior/menor */
+  max-width: 730px;             /* ajuste se quiser maior/menor */
 }
 
 /* ====== AJUSTES PARA TELAS PEQUENAS ====== */
