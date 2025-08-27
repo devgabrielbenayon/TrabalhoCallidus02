@@ -43,7 +43,15 @@ export default function Layout({ children }) {
             <Notifications color="primary" />
           </IconButton>
 
-          <Typography variant="h6" sx={{ flexGrow: 1, textAlign: "center", fontWeight: "bold" }}>
+          <Typography
+            variant="h6"
+            sx={{ 
+              flexGrow: 1, 
+              textAlign: "center", 
+              fontWeight: "bold", 
+              fontFamily: "'Quicksand', sans-serif" // nova fonte
+            }}
+          >
             POMODORO APP
           </Typography>
 
