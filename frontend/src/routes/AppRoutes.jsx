@@ -2,15 +2,21 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import Kanban from "../pages/Kanban";
 import Pomodoro from "../pages/Pomodoro";
+import Produtividade from "../pages/Produtividade";
 import GerenciarTarefas from "../pages/GerenciarTarefas";
-import Login from "../pages/Login";
 import Layout from "../components/Layout";
-import PrivateRoute from "./PrivateRoute";
+import Login from "../pages/Login";
+import { useAuth } from "../context/AuthContext";
+
+function PrivateRoute({ children }) {
+  const { user } = useAuth();
+  return user ? children : <Navigate to="/login" />;
+}
 
 export default function AppRoutes() {
   return (
     <Routes>
-      {/* Rota pública */}
+      {/* Login */}
       <Route path="/login" element={<Login />} />
 
       {/* Rotas privadas */}
@@ -24,7 +30,6 @@ export default function AppRoutes() {
           </PrivateRoute>
         }
       />
-
       <Route
         path="/kanban"
         element={
@@ -35,18 +40,6 @@ export default function AppRoutes() {
           </PrivateRoute>
         }
       />
-
-      <Route
-        path="/pomodoro"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <Pomodoro />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-
       <Route
         path="/gerenciar-tarefas"
         element={
@@ -57,19 +50,26 @@ export default function AppRoutes() {
           </PrivateRoute>
         }
       />
-
-      {/* Outras rotas privadas */}
+      <Route
+        path="/pomodoro"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <Pomodoro />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
       <Route
         path="/produtividade"
         element={
           <PrivateRoute>
             <Layout>
-              <div style={{ padding: 24 }}>Produtividade Detalhada</div>
+              <Produtividade />
             </Layout>
           </PrivateRoute>
         }
       />
-
       <Route
         path="/configuracoes"
         element={
@@ -81,7 +81,7 @@ export default function AppRoutes() {
         }
       />
 
-      {/* Redirecionamento padrão */}
+      {/* Página não encontrada */}
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );
