@@ -1,0 +1,74 @@
+import React, { useState } from "react";
+import { Box, AppBar, Toolbar, IconButton, Typography, Avatar, Drawer, List, ListItemButton, ListItemIcon, ListItemText, Divider } from "@mui/material";
+import { Menu as MenuIcon, AddCircleOutline, Assignment, Timer, BarChart, ManageAccounts, Notifications, Settings } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+
+export default function Layout({ children }) {
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const toggleDrawer = (open) => () => setOpenDrawer(open);
+
+  return (
+    <Box sx={{ flexGrow: 1, minHeight: "100vh", bgcolor: "#f5f5f5" }}>
+      {/* Navbar */}
+      <AppBar position="static" sx={{ bgcolor: "#fff", color: "black", boxShadow: 1 }}>
+        <Toolbar>
+          <IconButton edge="start" onClick={toggleDrawer(true)}>
+            <MenuIcon />
+          </IconButton>
+          <IconButton>
+            <Notifications color="primary" />
+          </IconButton>
+          <Typography variant="h6" sx={{ flexGrow: 1, textAlign: "center", fontWeight: "bold" }}>
+            POMODORO APP
+          </Typography>
+          <IconButton>
+            <Settings color="primary" />
+          </IconButton>
+          <Avatar src="https://via.placeholder.com/40" />
+        </Toolbar>
+      </AppBar>
+
+      {/* Sidebar (Drawer) */}
+      <Drawer anchor="left" open={openDrawer} onClose={toggleDrawer(false)}>
+        <Box sx={{ width: 280 }} role="presentation" onClick={toggleDrawer(false)}>
+          <Typography variant="h6" sx={{ p: 2, fontWeight: 700 }}>
+            Menu
+          </Typography>
+          <Divider />
+          <List>
+            <ListItemButton component={Link} to="/dashboard">
+              <ListItemIcon><AddCircleOutline /></ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
+            <ListItemButton component={Link} to="/nova-tarefa">
+              <ListItemIcon><AddCircleOutline /></ListItemIcon>
+              <ListItemText primary="Adicionar nova tarefa" />
+            </ListItemButton>
+            <ListItemButton component={Link} to="/kanban">
+              <ListItemIcon><Assignment /></ListItemIcon>
+              <ListItemText primary="Minhas tarefas" />
+            </ListItemButton>
+            <ListItemButton component={Link} to="/pomodoro">
+              <ListItemIcon><Timer /></ListItemIcon>
+              <ListItemText primary="Pomodoro" />
+            </ListItemButton>
+            <ListItemButton component={Link} to="/produtividade">
+              <ListItemIcon><BarChart /></ListItemIcon>
+              <ListItemText primary="Produtividade Detalhada" />
+            </ListItemButton>
+            <Divider sx={{ my: 1 }} />
+            <ListItemButton component={Link} to="/configuracoes">
+              <ListItemIcon><ManageAccounts /></ListItemIcon>
+              <ListItemText primary="Configurações da Conta" />
+            </ListItemButton>
+          </List>
+        </Box>
+      </Drawer>
+
+      {/* Conteúdo principal */}
+      <Box sx={{ p: 2 }}>
+        {children}
+      </Box>
+    </Box>
+  );
+}

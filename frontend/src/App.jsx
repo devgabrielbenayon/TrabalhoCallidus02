@@ -1,7 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Kanban from "./pages/Kanban";
+import Layout from "./components/Layout";
+import Login from "./pages/Login";
 import { useAuth } from "./context/AuthContext";
 
 function PrivateRoute({ children }) {
@@ -18,7 +19,9 @@ export default function App() {
         path="/dashboard"
         element={
           <PrivateRoute>
-            <Dashboard />
+            <Layout>
+              <Dashboard />
+            </Layout>
           </PrivateRoute>
         }
       />
@@ -27,31 +30,53 @@ export default function App() {
         path="/kanban"
         element={
           <PrivateRoute>
-            <Kanban />
+            <Layout>
+              <Kanban />
+            </Layout>
           </PrivateRoute>
         }
       />
 
-      {/* Páginas da sidebar (placeholders, todas protegidas) */}
+      {/* Outras páginas da sidebar */}
       <Route
         path="/nova-tarefa"
-        element={<PrivateRoute><div style={{ padding: 24 }}>Adicionar nova tarefa</div></PrivateRoute>}
-      />
-      <Route
-        path="/minhas-tarefas"
-        element={<PrivateRoute><div style={{ padding: 24 }}>Minhas tarefas</div></PrivateRoute>}
+        element={
+          <PrivateRoute>
+            <Layout>
+              <div style={{ padding: 24 }}>Adicionar nova tarefa</div>
+            </Layout>
+          </PrivateRoute>
+        }
       />
       <Route
         path="/pomodoro"
-        element={<PrivateRoute><div style={{ padding: 24 }}>Pomodoro</div></PrivateRoute>}
+        element={
+          <PrivateRoute>
+            <Layout>
+              <div style={{ padding: 24 }}>Pomodoro</div>
+            </Layout>
+          </PrivateRoute>
+        }
       />
       <Route
         path="/produtividade"
-        element={<PrivateRoute><div style={{ padding: 24 }}>Produtividade Detalhada</div></PrivateRoute>}
+        element={
+          <PrivateRoute>
+            <Layout>
+              <div style={{ padding: 24 }}>Produtividade Detalhada</div>
+            </Layout>
+          </PrivateRoute>
+        }
       />
       <Route
         path="/configuracoes"
-        element={<PrivateRoute><div style={{ padding: 24 }}>Configurações da Conta</div></PrivateRoute>}
+        element={
+          <PrivateRoute>
+            <Layout>
+              <div style={{ padding: 24 }}>Configurações da Conta</div>
+            </Layout>
+          </PrivateRoute>
+        }
       />
 
       <Route path="*" element={<Navigate to="/login" />} />
