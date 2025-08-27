@@ -40,9 +40,9 @@ export default function Layout({ children }) {
               <ListItemIcon><AddCircleOutline /></ListItemIcon>
               <ListItemText primary="Dashboard" />
             </ListItemButton>
-            <ListItemButton component={Link} to="/nova-tarefa">
+            <ListItemButton component={Link} to="/gerenciar-tarefas">
               <ListItemIcon><AddCircleOutline /></ListItemIcon>
-              <ListItemText primary="Adicionar nova tarefa" />
+              <ListItemText primary="Gerenciar Tarefas" />
             </ListItemButton>
             <ListItemButton component={Link} to="/kanban">
               <ListItemIcon><Assignment /></ListItemIcon>

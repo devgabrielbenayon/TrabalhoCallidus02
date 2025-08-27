@@ -1,8 +1,11 @@
+// src/App.jsx
 import { Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Kanban from "./pages/Kanban";
 import Layout from "./components/Layout";
 import Login from "./pages/Login";
+import Pomodoro from "./pages/Pomodoro";
+import GerenciarTarefas from "./pages/GerenciarTarefas"; // NOVO
 import { useAuth } from "./context/AuthContext";
 
 function PrivateRoute({ children }) {
@@ -37,7 +40,28 @@ export default function App() {
         }
       />
 
-      {/* Outras páginas da sidebar */}
+      <Route
+        path="/pomodoro"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <Pomodoro />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/gerenciar-tarefas"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <GerenciarTarefas />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+
       <Route
         path="/nova-tarefa"
         element={
@@ -48,16 +72,7 @@ export default function App() {
           </PrivateRoute>
         }
       />
-      <Route
-        path="/pomodoro"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <div style={{ padding: 24 }}>Pomodoro</div>
-            </Layout>
-          </PrivateRoute>
-        }
-      />
+
       <Route
         path="/produtividade"
         element={
@@ -68,6 +83,7 @@ export default function App() {
           </PrivateRoute>
         }
       />
+
       <Route
         path="/configuracoes"
         element={

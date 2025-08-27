@@ -1,3 +1,4 @@
+// src/components/Sidebar.jsx
 import { Drawer, List, ListItemButton, ListItemText, Toolbar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +11,7 @@ export default function Sidebar() {
     { text: "Nova Tarefa", path: "/nova-tarefa" },
     { text: "Pomodoro", path: "/pomodoro" },
     { text: "Produtividade", path: "/produtividade" },
+    { text: "Gerenciar Tarefas", path: "/gerenciar-tarefas" }, // NOVO
     { text: "Configurações", path: "/configuracoes" },
   ];
 
