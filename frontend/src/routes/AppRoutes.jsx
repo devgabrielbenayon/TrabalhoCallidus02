@@ -4,6 +4,7 @@ import Kanban from "../pages/Kanban";
 import Pomodoro from "../pages/Pomodoro";
 import Produtividade from "../pages/Produtividade";
 import GerenciarTarefas from "../pages/GerenciarTarefas";
+import ConfigConta from "../pages/ConfigConta"; // <- import da nova página
 import Layout from "../components/Layout";
 import Login from "../pages/Login";
 import { useAuth } from "../context/AuthContext";
@@ -75,7 +76,7 @@ export default function AppRoutes() {
         element={
           <PrivateRoute>
             <Layout>
-              <div style={{ padding: 24 }}>Configurações da Conta</div>
+              <ConfigConta /> {/* <- página de configurações */}
             </Layout>
           </PrivateRoute>
         }
