@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, current_app
 from app.models.User import User
 from app.models.UserManager import UserManager
 from datetime import datetime, timedelta, timezone
@@ -6,9 +6,9 @@ import jwt
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
-manager = UserManager("../tests/users.json")
+manager = UserManager("users.json")
 
-SECRET_KEY = "chave_segredo"
+# SECRET_KEY = "chave_segredo"
 
 
 #POST registro de usuário
@@ -49,7 +49,7 @@ def login():
             "user_id": user.id,
             "exp": datetime.now(timezone.utc) + timedelta(hours=1)
         },
-        SECRET_KEY,
+        current_app.config['SECRET_KEY'], # Altere para usar a chave da aplicação
         algorithm="HS256"
     )
 
